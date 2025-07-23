@@ -1,4 +1,6 @@
-Top element: 200
-Top element: 10
-Top element: 268494162
-Top element: 333404101
+60
+50
+40
+30
+20
+10
