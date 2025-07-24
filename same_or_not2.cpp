@@ -26,7 +26,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
+// Custom Stack using vector
 class my_stack {
 public:
     vector<int> v;
@@ -39,7 +39,7 @@ public:
         if (!v.empty()) v.pop_back();
     }
 
-    int top() {    
+    int top() {
         return v.back();
     }
 
@@ -52,27 +52,56 @@ public:
     }
 };
 
+// Node for Queue
+class Node {
+public:
+    int val;
+    Node* next;
+
+    Node(int val) {
+        this->val = val;
+        this->next = NULL;
+    }
+};
+
+// Custom Queue using linked list
 class my_queue {
 public:
- 
+    Node* head = NULL;
+    Node* tail = NULL;
+    int sz = 0;
+
     void push(int val) {
-      v.push_back(val);
+        sz++;
+        Node* newNode = new Node(val);
+        if (head == NULL) {
+            head = newNode;
+            tail = newNode;
+            return;
+        }
+        tail->next = newNode;
+        tail = newNode;
     }
 
     void pop() {
-       v.pop_front();
+        if (head == NULL) return;
+        sz--;
+        Node* deleteNode = head;
+        head = head->next;
+        delete deleteNode;
+        if (head == NULL) tail = NULL;
     }
 
     int front() {
-        return v.front();
+        return head->val;
     }
 
     int size() {
-        return v.size();
+        return sz;
     }
 
     bool empty() {
-        return v.empty();
+        return head == NULL;
     }
 };
 
@@ -83,20 +112,27 @@ int main() {
     my_stack st;
     my_queue q;
 
+    // Input stack values
     for (int i = 0; i < n; i++) {
         int val;
         cin >> val;
         st.push(val);
     }
+
+    // Input queue values
     for (int i = 0; i < m; i++) {
         int val;
         cin >> val;
         q.push(val);
     }
+
+    // If sizes differ, they cannot be the same
     if (n != m) {
         cout << "NO" << endl;
         return 0;
     }
+
+    // Compare stack pop with queue front
     bool isSame = true;
     while (!st.empty() && !q.empty()) {
         if (st.top() != q.front()) {
@@ -114,4 +150,5 @@ int main() {
 
     return 0;
 }
+
 
